@@ -26,7 +26,7 @@ npm install -g cliproxy-image-cli
 ### macOS / Linux
 
 ```bash
-git clone https://github.com/YOUR_NAME/cliproxy-image-cli-skill.git
+git clone https://github.com/fathermrsing/cliproxy-image-cli-skill.git
 cd cliproxy-image-cli-skill
 ./scripts/install.sh
 ```
@@ -41,7 +41,7 @@ cp -R ./skill_src/cliproxy-image-cli ~/.codex/skills/cliproxy-image-cli
 ### Windows PowerShell
 
 ```powershell
-git clone https://github.com/YOUR_NAME/cliproxy-image-cli-skill.git
+git clone https://github.com/fathermrsing/cliproxy-image-cli-skill.git
 cd cliproxy-image-cli-skill
 .\scripts\install.ps1
 ```
