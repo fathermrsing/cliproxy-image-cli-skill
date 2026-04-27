@@ -1,21 +1,32 @@
 ---
 name: cliproxy-image-cli
-description: Use when Codex needs to generate or edit raster images as local files through the installed `cliproxy-image-cli` command, especially requests such as “画一张图”, “生成海报/封面/插画”, “用 gpt-image-2 生图”, “把这张图片改成…”, or when the user wants to save image outputs in the current project. This skill reuses local Codex OpenAI-compatible configuration and supports text-to-image, image editing, masks, metadata, and explicit output paths.
+description: Use when Codex needs to generate or edit raster images as local files through the vendored `cliproxy-image-cli` command bundled inside this skill, especially requests such as “画一张图”, “生成海报/封面/插画”, “用 gpt-image-2 生图”, “把这张图片改成…”, or when the user wants to save image outputs in the current project. This skill reuses local Codex OpenAI-compatible configuration and supports text-to-image, image editing, masks, metadata, and explicit output paths without requiring a global CLI install.
 ---
 
 # CLIProxy Image CLI
 
-Use the installed `cliproxy-image-cli` command to generate or edit local image files from Codex. The CLI automatically reads the local Codex config and auth, so do not ask for base URL, port, or API key unless autodiscovery fails.
+Use the vendored `cliproxy-image-cli` Node.js command bundled with this skill to generate or edit local image files from Codex. The CLI automatically reads the local Codex config and auth, so do not ask for base URL, port, or API key unless autodiscovery fails.
 
 ## Preconditions
 
-- Command: `cliproxy-image-cli`
 - Runtime: Node.js 18+
+- Vendored command path: `${CODEX_HOME:-$HOME/.codex}/skills/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js`
 - Default model: `gpt-image-2`
 - Config sources: `CODEX_HOME` or `~/.codex/config.toml`, plus `~/.codex/auth.json`
 - Supported upstream paths: `/v1/images/generations`, `/v1/images/edits`, or CLI-managed `/v1/responses` fallback
 
-If the command is missing, install it with `npm install -g cliproxy-image-cli` or the user’s package manager before continuing.
+Do not require `npm install -g cliproxy-image-cli`. If the vendored command is missing, ask the user to reinstall this skill from its repository.
+
+The bundled CLI code is vendored from `https://github.com/noooob-coder/cliproxy-image-cli` at commit `2560cb279fce78edfea9f40221586fe88e665dcf`; see `vendor/cliproxy-image-cli/UPSTREAM.md` and `LICENSE`.
+
+## Command helper
+
+Use this shell variable in commands to avoid relying on a global executable:
+
+```bash
+CLI="${CODEX_HOME:-$HOME/.codex}/skills/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js"
+node "$CLI" --help
+```
 
 ## Core workflow
 
@@ -31,7 +42,7 @@ If the command is missing, install it with `npm install -g cliproxy-image-cli` o
    - Use `1024x1024` when orientation is unclear.
    - Use `auto` only when explicitly requested.
 4. Improve underspecified prompts before invoking the CLI. Preserve user intent, language, and constraints.
-5. Run the CLI, then verify exit code and that output file(s) exist.
+5. Run the CLI through `node "$CLI"`, then verify exit code and that output file(s) exist.
 6. Report the saved path(s) concisely.
 
 For detailed flags and troubleshooting, read `references/cliproxy-image-cli.md` only when needed.
@@ -39,7 +50,8 @@ For detailed flags and troubleshooting, read `references/cliproxy-image-cli.md` 
 ## Generate
 
 ```bash
-cliproxy-image-cli generate \
+CLI="${CODEX_HOME:-$HOME/.codex}/skills/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js"
+node "$CLI" generate \
   --output ./image.png \
   --size 1024x1024 \
   --quality high \
@@ -61,7 +73,8 @@ Useful flags:
 ## Edit
 
 ```bash
-cliproxy-image-cli edit \
+CLI="${CODEX_HOME:-$HOME/.codex}/skills/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js"
+node "$CLI" edit \
   --image ./input.png \
   --mask ./mask.png \
   --output ./edited.png \

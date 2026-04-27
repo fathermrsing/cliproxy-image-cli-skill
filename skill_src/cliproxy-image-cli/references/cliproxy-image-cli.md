@@ -1,14 +1,19 @@
 # cliproxy-image-cli reference
 
-Source reference: https://github.com/noooob-coder/cliproxy-image-cli
+This skill vendors selected CLI files from:
 
-## Commands
+- Source repository: https://github.com/noooob-coder/cliproxy-image-cli
+- Vendored commit: `2560cb279fce78edfea9f40221586fe88e665dcf`
+- License: see `vendor/cliproxy-image-cli/LICENSE`
+
+Use the vendored executable through Node.js instead of relying on a global command:
 
 ```bash
-cliproxy-image-cli [global options] <command> [command options] <prompt>
+CLI="${CODEX_HOME:-$HOME/.codex}/skills/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js"
+node "$CLI" [global options] <command> [command options] <prompt>
 ```
 
-Commands:
+## Commands
 
 - `generate`: call image generation through local Codex-compatible upstream.
 - `edit`: call image editing through local Codex-compatible upstream.
@@ -23,7 +28,7 @@ Global options:
 ## Generate flags
 
 ```bash
-cliproxy-image-cli generate [options] [--output <file|dir>] <prompt>
+node "$CLI" generate [options] [--output <file|dir>] <prompt>
 ```
 
 - `--model <name>`: default `gpt-image-2`.
@@ -40,7 +45,7 @@ cliproxy-image-cli generate [options] [--output <file|dir>] <prompt>
 ## Edit flags
 
 ```bash
-cliproxy-image-cli edit [options] --image <path|url> [--output <file|dir>] <prompt>
+node "$CLI" edit [options] --image <path|url> [--output <file|dir>] <prompt>
 ```
 
 - `--image <path|url|data-url>`: repeatable; at least one image is required.
@@ -70,7 +75,8 @@ The cache is keyed by `base_url + action` so generation and editing can use diff
 
 ## Troubleshooting
 
-- Missing command: install with `npm install -g cliproxy-image-cli`.
+- Missing vendored command: reinstall this skill from its repository.
+- Missing Node.js: install Node.js 18+.
 - Missing credentials: verify `~/.codex/auth.json`.
 - Unsupported upstream: point Codex at an OpenAI-compatible provider implementing `/v1/images/*` or image-capable `/v1/responses`.
 - Existing output conflict: choose a new path, or use `--overwrite` only when the user approved replacement.

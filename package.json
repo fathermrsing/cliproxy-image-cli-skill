@@ -1,10 +1,11 @@
 {
   "name": "cliproxy-image-cli-skill",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Codex skill wrapper for cliproxy-image-cli image generation and editing.",
+  "description": "Self-contained Codex skill wrapper with vendored cliproxy-image-cli image generation and editing.",
   "scripts": {
-    "install-skill": "bash scripts/install.sh"
+    "install-skill": "bash scripts/install.sh",
+    "cli-help": "node skill_src/cliproxy-image-cli/vendor/cliproxy-image-cli/bin/cliproxy-image-cli.js --help"
   },
   "keywords": [
     "codex",
