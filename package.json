@@ -1,0 +1,16 @@
+{
+  "name": "cliproxy-image-cli-skill",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Codex skill wrapper for cliproxy-image-cli image generation and editing.",
+  "scripts": {
+    "install-skill": "bash scripts/install.sh"
+  },
+  "keywords": [
+    "codex",
+    "skill",
+    "cliproxy-image-cli",
+    "gpt-image-2",
+    "image-generation"
+  ]
+}

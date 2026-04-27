@@ -1,0 +1,6 @@
+interface:
+  display_name: "CLIProxy Image CLI"
+  short_description: "Generate/edit images through local Codex config"
+  default_prompt: "Use $cliproxy-image-cli to generate an image and save it into the current working directory."
+policy:
+  allow_implicit_invocation: true
